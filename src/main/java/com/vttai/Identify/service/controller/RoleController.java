@@ -1,0 +1,40 @@
+package com.vttai.Identify.service.controller;
+
+import com.vttai.Identify.service.dto.request.ApiResponse;
+import com.vttai.Identify.service.dto.request.RoleRequest;
+import com.vttai.Identify.service.dto.response.RoleResponse;
+import com.vttai.Identify.service.service.RoleService;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/Roles")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
+public class RoleController {
+    RoleService RoleService;
+    @PostMapping
+    ApiResponse<RoleResponse> create(@RequestBody RoleRequest request) {
+        return ApiResponse.<RoleResponse>builder()
+                .result(RoleService.create(request))
+                .build();
+    }
+
+    @GetMapping
+    ApiResponse<List<RoleResponse>> getAll(){
+        return ApiResponse.<List<RoleResponse>>builder()
+                .result(RoleService.getAll())
+                .build();
+    }
+    @DeleteMapping("/{role}")
+    ApiResponse<Void> delete(@PathVariable String Role){
+        RoleService.delete(Role);
+        return ApiResponse.<Void>builder().build();
+    }
+}
