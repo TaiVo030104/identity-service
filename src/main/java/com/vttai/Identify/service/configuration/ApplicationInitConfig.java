@@ -7,9 +7,11 @@ import com.vttai.Identify.service.repository.RoleRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,29 +25,36 @@ import java.util.Set;
 @Slf4j
 public class ApplicationInitConfig {
 
-    @Autowired
     PasswordEncoder passwordEncoder;
+
+    @NonFinal
+    static final String ADMIN_USER_NAME = "admin";
+
+    @NonFinal
+    static final String ADMIN_PASSWORD = "admin";
+
     @Bean
-    ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository){
+    @ConditionalOnProperty(
+            prefix = "spring",
+            value = "datasource.driverClassName",
+            havingValue = "com.mysql.cj.jdbc.Driver")
+    ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository) {
+        log.info("Initializing application.....");
         return args -> {
-            if (userRepository.findByUsername("admin").isEmpty()) {
-                // Create or get the ADMIN role
-                Role adminRole = roleRepository.findById("ADMIN")
-                    .orElseGet(() -> {
-                        Role role = new Role("ADMIN", "Administrator role", null);
-                        return roleRepository.save(role);
-                    });
-                
-                Set<Role> roles = new HashSet<>();
-                roles.add(adminRole);
-                
-                User user = new User();
-                user.setUsername("admin");
-                user.setPassword(passwordEncoder.encode("admin"));
-                user.setRoles(roles);
+            if (userRepository.findByUsername(ADMIN_USER_NAME).isEmpty()) {
+
+                var roles = new HashSet<Role>();
+
+                User user = User.builder()
+                        .username(ADMIN_USER_NAME)
+                        .password(passwordEncoder.encode(ADMIN_PASSWORD))
+                        .roles(roles)
+                        .build();
+
                 userRepository.save(user);
                 log.warn("admin user has been created with default password: admin, please change it");
             }
+            log.info("Application initialization completed .....");
         };
     }
 }

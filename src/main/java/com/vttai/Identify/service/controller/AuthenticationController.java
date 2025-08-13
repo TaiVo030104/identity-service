@@ -1,8 +1,6 @@
 package com.vttai.Identify.service.controller;
 import com.nimbusds.jose.JOSEException;
-import com.vttai.Identify.service.dto.request.ApiResponse;
-import com.vttai.Identify.service.dto.request.AuthenticationRequest;
-import com.vttai.Identify.service.dto.request.IntrospectRequest;
+import com.vttai.Identify.service.dto.request.*;
 import com.vttai.Identify.service.dto.response.AuthenticationResponse;
 import com.vttai.Identify.service.dto.response.IntrospectResponse;
 import com.vttai.Identify.service.service.AuthenticationService;
@@ -23,9 +21,9 @@ import java.text.ParseException;
 public class AuthenticationController {
     AuthenticationService authenticationService;
 
-    @PostMapping("/token")
-    ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) throws JOSEException {
-        var result = authenticationService.authenticate(request);
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request) throws JOSEException, ParseException {
+        var result = authenticationService.refreshToken(request);
         return ApiResponse.<AuthenticationResponse>builder().result(result).build();
     }
 
@@ -34,6 +32,15 @@ public class AuthenticationController {
             throws ParseException, JOSEException {
         var result = authenticationService.introspect(request);
         return ApiResponse.<IntrospectResponse>builder().result(result).build();
+    }
+
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request)
+            throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
+                .build();
+
     }
 
 }

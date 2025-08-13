@@ -10,8 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface  PermissionMapper {
+public interface PermissionMapper {
     Permission toPermission(PermissionRequest request);
+
     PermissionResponse toPermissionResponse(Permission permission);
-    void updateUser(@MappingTarget User user, UserUpdateRequest request);
 }

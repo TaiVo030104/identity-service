@@ -1,6 +1,8 @@
 package com.vttai.Identify.service.dto.request;
 
 import java.time.LocalDate;
+
+import com.vttai.Identify.service.validator.DobConstraint;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -12,13 +14,14 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreateRequest {
-    @Size(min = 3, message = "USERNAME_INVALID")
+    @Size(min = 4, message = "USERNAME_INVALID")
     String username;
-    @Size(min = 8, message = "PASSWORD_INVALID")
+
+    @Size(min = 8, message = "INVALID_PASSWORD")
     String password;
+
     String firstName;
     String lastName;
+
     LocalDate dob;
-
-
 }

@@ -13,28 +13,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Roles")
+@RequestMapping("/roles")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class RoleController {
-    RoleService RoleService;
+    RoleService roleService;
+
     @PostMapping
     ApiResponse<RoleResponse> create(@RequestBody RoleRequest request) {
         return ApiResponse.<RoleResponse>builder()
-                .result(RoleService.create(request))
+                .result(roleService.create(request))
                 .build();
     }
 
     @GetMapping
-    ApiResponse<List<RoleResponse>> getAll(){
+    ApiResponse<List<RoleResponse>> getAll() {
         return ApiResponse.<List<RoleResponse>>builder()
-                .result(RoleService.getAll())
+                .result(roleService.getAll())
                 .build();
     }
+
     @DeleteMapping("/{role}")
-    ApiResponse<Void> delete(@PathVariable String Role){
-        RoleService.delete(Role);
+    ApiResponse<Void> delete(@PathVariable String role) {
+        roleService.delete(role);
         return ApiResponse.<Void>builder().build();
     }
 }

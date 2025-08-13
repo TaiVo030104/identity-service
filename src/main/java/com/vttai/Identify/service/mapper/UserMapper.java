@@ -17,19 +17,8 @@ import java.util.stream.Collectors;
 public interface UserMapper {
     User toUser(UserCreateRequest request);
 
-    @Mapping(target = "roles", source = "roles", qualifiedByName = "rolesToNames")
     UserResponse toUserResponse(User user);
 
     @Mapping(target = "roles", ignore = true)
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
-    
-    @Named("rolesToNames")
-    default Set<String> rolesToNames(Set<Role> roles) {
-        if (roles == null) {
-            return null;
-        }
-        return roles.stream()
-                .map(role -> role.getName())
-                .collect(Collectors.toSet());
-    }
 }
