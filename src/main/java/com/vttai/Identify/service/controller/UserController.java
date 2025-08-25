@@ -1,15 +1,16 @@
 package com.vttai.Identify.service.controller;
+
 import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
 
 import com.vttai.Identify.service.dto.request.ApiResponse;
 import com.vttai.Identify.service.dto.request.UserCreateRequest;
 import com.vttai.Identify.service.dto.request.UserUpdateRequest;
 import com.vttai.Identify.service.dto.response.UserResponse;
 import com.vttai.Identify.service.service.UserService;
-import jakarta.validation.Valid;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

@@ -1,18 +1,21 @@
 package com.vttai.Identify.service.controller;
-import com.nimbusds.jose.JOSEException;
-import com.vttai.Identify.service.dto.request.*;
-import com.vttai.Identify.service.dto.response.AuthenticationResponse;
-import com.vttai.Identify.service.dto.response.IntrospectResponse;
-import com.vttai.Identify.service.service.AuthenticationService;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+
+import java.text.ParseException;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
+import com.nimbusds.jose.JOSEException;
+import com.vttai.Identify.service.dto.request.*;
+import com.vttai.Identify.service.dto.response.AuthenticationResponse;
+import com.vttai.Identify.service.dto.response.IntrospectResponse;
+import com.vttai.Identify.service.service.AuthenticationService;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,7 +25,8 @@ public class AuthenticationController {
     AuthenticationService authenticationService;
 
     @PostMapping("/refresh")
-    ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request) throws JOSEException, ParseException {
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request)
+            throws JOSEException, ParseException {
         var result = authenticationService.refreshToken(request);
         return ApiResponse.<AuthenticationResponse>builder().result(result).build();
     }
@@ -35,12 +39,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/logout")
-    ApiResponse<Void> logout(@RequestBody LogoutRequest request)
-            throws ParseException, JOSEException {
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
         authenticationService.logout(request);
-        return ApiResponse.<Void>builder()
-                .build();
-
+        return ApiResponse.<Void>builder().build();
     }
-
 }

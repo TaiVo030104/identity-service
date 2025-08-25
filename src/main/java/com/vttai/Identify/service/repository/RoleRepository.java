@@ -1,11 +1,9 @@
 package com.vttai.Identify.service.repository;
 
-import com.vttai.Identify.service.entity.Permission;
-import com.vttai.Identify.service.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface RoleRepository extends JpaRepository<Role, String> {
+import com.vttai.Identify.service.entity.Role;
 
-}
+@Repository
+public interface RoleRepository extends JpaRepository<Role, String> {}

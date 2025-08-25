@@ -1,16 +1,18 @@
 package com.vttai.Identify.service.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.vttai.Identify.service.dto.request.ApiResponse;
 import com.vttai.Identify.service.dto.request.PermissionRequest;
 import com.vttai.Identify.service.dto.response.PermissionResponse;
 import com.vttai.Identify.service.service.PermissionService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/permissions")

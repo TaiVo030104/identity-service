@@ -1,23 +1,23 @@
 package com.vttai.Identify.service.configuration;
 
-import com.vttai.Identify.service.entity.User;
-import com.vttai.Identify.service.entity.Role;
-import com.vttai.Identify.service.repository.UserRepository;
-import com.vttai.Identify.service.repository.RoleRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashSet;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.vttai.Identify.service.entity.Role;
+import com.vttai.Identify.service.entity.User;
+import com.vttai.Identify.service.repository.RoleRepository;
+import com.vttai.Identify.service.repository.UserRepository;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @RequiredArgsConstructor

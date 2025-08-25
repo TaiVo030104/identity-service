@@ -1,5 +1,15 @@
 package com.vttai.Identify.service.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.vttai.Identify.service.dto.request.UserCreateRequest;
 import com.vttai.Identify.service.dto.request.UserUpdateRequest;
 import com.vttai.Identify.service.dto.response.UserResponse;
@@ -10,18 +20,10 @@ import com.vttai.Identify.service.exception.ErrorCode;
 import com.vttai.Identify.service.mapper.UserMapper;
 import com.vttai.Identify.service.repository.RoleRepository;
 import com.vttai.Identify.service.repository.UserRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +67,7 @@ public class UserService {
         userMapper.updateUser(user, request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         var roles = roleRepository.findAllById(request.getRoles());
-        user.setRoles(new  HashSet<>(roles));
+        user.setRoles(new HashSet<>(roles));
         return userMapper.toUserResponse(userRepository.save(user));
     }
 

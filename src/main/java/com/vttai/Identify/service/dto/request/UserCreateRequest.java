@@ -2,11 +2,10 @@ package com.vttai.Identify.service.dto.request;
 
 import java.time.LocalDate;
 
-import com.vttai.Identify.service.validator.DobConstraint;
 import jakarta.validation.constraints.Size;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 
 @Data
 @NoArgsConstructor
